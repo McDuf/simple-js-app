@@ -153,9 +153,42 @@ let pokemonList = [
     {dex: 151, name: 'Mew', gen: 1, hp: 100, types: ['Psychic', ''], height: 1.33, weight: 88},
 ];
 
-//Practicing more but not complete
-document.querySelector('button').addEventListener('click', ( ) => {
-    let currentDex = document.querySelector('#dex').value;
+
+for (let i=0; i < pokemonList.length; i++) {
+    if (pokemonList[i].height > 0 && pokemonList[i].height <= 1) {
+        document.write(" <strong>Name:</strong> " + pokemonList[i].name + "<br><strong>Height:</strong> " + pokemonList[i].height + "ft - That is Tiny <br><br>" )
+    } else if (parseFloat(pokemonList[i].height) > 10) {
+        document.write(" <strong>Name:</strong> " + pokemonList[i].name + "<br><strong>Height:</strong> " + pokemonList[i].height + "ft - WoW THAT IS TALL!! <br><br>" )
+    } else {  
+        document.write(" <strong>Name:</strong> " + pokemonList[i].name + "<br><strong>Height:</strong> " + pokemonList[i].height + "ft <br><br>" )
+    }
+}
+
+/*looking into max and min creations 
+function pokemonList[i].height(arr) {
+    let len = arr.length;
+    let min = Infinity;
+    while (len--) {
+      if (arr[len] < min) {
+        min = arr[len];
+      }
+    }
+    return min;
+}
+
+
+// Practicing more but not complete
+document.querySelector('button').addEventListener('click', () => {
+    let currentDex = parseInt(document.querySelector('#dex').value);
+    let pokemon = pokemonList.find(p => p.dex === currentDex);
     document.querySelector('#dex_key').innerText = currentDex;
-    document.querySelector('#name').innerText = pokemonList [currentDex];
+    document.querySelector('name').innerText = pokemonList [currentDex];
+if (pokemon) {
+    document.log(pokemonList[currentDex])
+} else if (pokemon === currentDex) {
+    document.write(currentName);
+} else {
+    document.querySelector('name').innerText = "Pokemon not found!";
+}
 });
+*/
