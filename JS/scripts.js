@@ -1,6 +1,6 @@
 let pokemonRepository = (function () {
     let pokemonList = [
-        {dex: 'dex', name: 'name', gen: 'gen', hp: 'hp', type: ['type', 'type2'], height: 'feet', weight: 'pounds'},
+        {dex: 0, name: 'sample', gen: 0, hp: 0, type: ['type', 'type2'], height: 'feet', weight: 'pounds'},
         {dex: 1, name: 'Bulbasaur', gen: 1, hp: 45, types: ['Grass', 'Poison'], height: 2.33, weight: 152},
         {dex: 2, name: 'Ivysaur', gen: 1, hp: 60, types: ['Grass', 'Poison'], height: 3.25, weight: 287},
         {dex: 3, name: 'Venusaur', gen: 1, hp: 80, types: ['Grass', 'Poison'], height: 6.58, weight: 2205},
@@ -156,8 +156,10 @@ let pokemonRepository = (function () {
 
 // add function with typeof parameters
 function add(pokemon) {
+    let keysNeeded = ['name', 'dex', 'gen', 'hp', 'height', 'weight', 'types'];
     if (
         typeof pokemon === "object" &&
+        Object.keys(pokemon).length === keysNeeded.length &&
         "name" in pokemon &&
         "dex" in pokemon &&
         "gen" in pokemon &&
@@ -179,22 +181,28 @@ function getEmAll() {
 
 // add listItem function with button
 function addListItem(pokemon) {
-    let container = document.querySelector('.container');
+    let pokemonList = document.querySelector('.container');
     let listPokemon = document.createElement('li');
-    let button = document.createElement('button')
+    let button = document.createElement('button');
     button.innerText = pokemon.name;
-    button.classList.add('button-class')
+    button.classList.add('button-class');
+    button.addEventListener('click', function() {
+        showDetails(pokemon) ;
+    });
     listPokemon.appendChild(button);
-    container.appendChild(listPokemon);   
+    pokemonList.appendChild(listPokemon);   
 }
 
+function showDetails(pokemon) {
+    console.log('Name: ' + pokemon.name + '  Hp: ' + pokemon.hp); }
 
 return {
     add:add,
     getEmAll: getEmAll,
-    addListItem: addListItem
-};
-})();
+    addListItem: addListItem,
+    showDetails: showDetails
+  } 
+}) ();
 
 //print all pokemon info
 pokemonRepository.getEmAll().forEach(function(pokemon) {
