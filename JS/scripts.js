@@ -154,22 +154,52 @@ let pokemonRepository = (function () {
         {dex: 151, name: 'Mew', gen: 1, hp: 100, types: ['Psychic', ''], height: 1.33, weight: 88}
 ];
 
+// add function with typeof parameters
 function add(pokemon) {
+    if (
+        typeof pokemon === "object" &&
+        "name" in pokemon &&
+        "dex" in pokemon &&
+        "gen" in pokemon &&
+        "hp" in pokemon &&
+        "height" in pokemon &&
+        "weight" in pokemon &&
+        "types" in pokemonList
+    ) {
     pokemonList.push(pokemon);
+} else {
+    console.log("Invalid Entry");
+  }
 }
 
+// getEmAll function
 function getEmAll() {
     return pokemonList;
 }
+
+// add listItem function with button
+function addListItem(pokemon) {
+    let container = document.querySelector('.container');
+    let listPokemon = document.createElement('li');
+    let button = document.createElement('button')
+    button.innerText = pokemon.name;
+    button.classList.add('button-class')
+    listPokemon.appendChild(button);
+    container.appendChild(listPokemon);   
+}
+
+
 return {
     add:add,
-    getEmAll: getEmAll
+    getEmAll: getEmAll,
+    addListItem: addListItem
 };
 })();
 
 //print all pokemon info
-pokemonRepository.getEmAll().forEach(function(pokemon){
-  document.write("<strong>" + pokemon.name + "'s <br> HP:</strong> " + pokemon.hp + "<br><strong>Height: </strong>" + pokemon.height + "<br><strong>Weight: </strong>" + pokemon.weight + "<br><strong>National Dex #: </strong>" + pokemon.dex + "<br><strong>Generation: </strong>" + pokemon.gen + "<br><strong>Type(s): </strong>" + pokemon.types +  "<p>")
+pokemonRepository.getEmAll().forEach(function(pokemon) {
+    pokemonRepository.addListItem(pokemon);
 });
-pokemonRepository.add({ name:'Fred' });
+
+pokemonRepository.add({ name:'Fred', dex: 999, gen: 5, hp: 999, height: 1.6, weight: 99, types: ['Water', 'Fire'] });
 console.log(pokemonRepository.getEmAll());

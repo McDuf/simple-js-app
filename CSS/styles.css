@@ -9,22 +9,24 @@ body {
 header {
     height: 75px;
     margin: 10px;
+    text-align: center;
     border: 3px solid black;
     background-color: #b8b8b8;
 }
-h1 {
+.button-class {
+    background-color: green;
+    border: 1px solid black;
+    color: white;
+    padding: 16px 32px;
     text-align: center;
-}
-span {
-    font-size: 1.2em;
-    font-weight: bolder;
-}
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-}
-.grid-container > div{
-    border: 1px black solid;
-    padding: 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white;
+    color:#000;
+    border: 2px solid green;
 }
