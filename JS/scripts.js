@@ -153,17 +153,23 @@ let pokemonRepository = (function () {
         {dex: 150, name: 'Mewtwo', gen: 1, hp: 106, types: ['Psychic', ''], height: 6.58, weight: 269},
         {dex: 151, name: 'Mew', gen: 1, hp: 100, types: ['Psychic', ''], height: 1.33, weight: 88}
 ];
+
+function add(pokemon) {
+    pokemonList.push(pokemon);
+}
+
+function getEmAll() {
+    return pokemonList;
+}
 return {
-    add: function() {
-        pokemonList.push(pokemon);
-    },
-    getEmAll: function() {
-        return pokemonList;
-    }
+    add:add,
+    getEmAll: getEmAll
 };
-}) ();
+})();
 
 //print all pokemon info
 pokemonRepository.getEmAll().forEach(function(pokemon){
   document.write("<strong>" + pokemon.name + "'s <br> HP:</strong> " + pokemon.hp + "<br><strong>Height: </strong>" + pokemon.height + "<br><strong>Weight: </strong>" + pokemon.weight + "<br><strong>National Dex #: </strong>" + pokemon.dex + "<br><strong>Generation: </strong>" + pokemon.gen + "<br><strong>Type(s): </strong>" + pokemon.types +  "<p>")
 });
+pokemonRepository.add({ name:'Fred' });
+console.log(pokemonRepository.getEmAll());
