@@ -66,22 +66,25 @@ main {
 	text-align: center;
 	width: 250px;
 	vertical-align: middle;
-	min-height: 210px;
+	min-height: 80px;
 	font-family: var(--title);
 	font-size: var(--text);
 	text-transform: uppercase;
 	margin: var(--standard-margin) auto;
 	color: var(--red);
-	font-weight: 900;
+	font-weight: 700;
 	cursor: pointer;
-	transition: border 0.2s ease, font-size 0.2s ease; }
+	transition: border 0.3s ease, font-size 0.3s ease; }
 
 .button-class:hover,
-.button-class:focus {
+.button-class:focus + .additional-info {
 	border: 10px solid var(--blue);
+	min-height: 210px;
     color: var(--blue);
 	font-size: 25px; } 
-
+.additional-info {
+	display:none;
+}
 /* Media Queries*/
 @media all and (max-width: 500px) {
     .page__header {
