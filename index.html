@@ -1,34 +1,103 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pokedex</title>
-    <link href="CSS/styles.css" rel="stylesheet" type="text/css">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <title>Pokemon List</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-    <header class="page__header">
-        <img class="page__header--item" src="img/pokedex-icon.jpg" alt="Logo for Pokedex">
-        <div></div>
-        <h1>Pokedex</h1>
-        <div class="bgshape"></div>
-    </header>
+  <header class="container-fluid">
+    <nav class="navbar">
+      <a class="navbar-brand" href="#">
+        <img src="./img/pokedex-icon.jpg" alt="Pokedex Logo"></a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="bgshape"></div>
+  </header>
+
+  <h2>Pokemon</h2>
+
+  <!-- Button trigger modal -->
+   <ul class="pokemon-list">
+     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-container-fluid"></button>
+   </ul>
 
 
-    <h2>Pokemon</h2>
-    <div class="container">
-        <div class="pokemon-list">
-            <div id="modal-container">
 
+  <div class="modal-fade" tabindex="-1" role="dialog" aria-labelledby="pokemon-card" aria-hidden="true">
+    <div id="modal-container-fluid">
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-md-1">Stage
+            <div class="col-md-5">Pokemon Name
+              <div class="col-md-2">HP:
+                <div class="col-md-1">Element Img
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <script src="./js/promise-polyfill.js"></script>
-    <script src="./JS/fetch.umd.js"></script>
-    <script src="./js/scripts.js"></script>
+      <div class="modal-body">
+        <div class="row">
+          <img class="col-md-10">Image
+        </div>
+        <div class="row">
+          <div class="col-md-1">Blank
+            <div class="col-md-1">No.
+              <div class="col-md-3">Type
+                <div class="col-md-2">Height
+                  <div class="col-md-2">Weight
+                    <div class="col-md-1">Blank
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-10">Ability</div>
+          <div class="row">
+            <div class="col-md-10>">Ability 2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- jQuery first <<changed to full version>>, then Popper.js, then Bootstrap JS 
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+  <!-- My script codes-->
+  <script src="./js/promise-polyfill.js"></script>
+  <script src="./js/fetch.umd.js"></script>
+  <script src="./js/scripts.js"></script>
 
 </body>
 
