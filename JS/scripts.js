@@ -1,146 +1,142 @@
-// Repository call IIFE Function
 let pokemonRepository = (function () {
     let pokemonList = [];
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=180';
-    let modalContainer = document.querySelector('#modal-container');
 
-    // add function
     function add(pokemon) {
-      pokemonList.push(pokemon)
+        pokemonList.push(pokemon);
     }
 
     function getEmAll() {
-      return pokemonList;
+        return pokemonList;
     }
 
     function addListItem(pokemon) {
-      let pokemonList = document.querySelector(".pokemon-list");
-      let listItem = document.createElement("li");
-      listItem.classList.add("list-group-item");
-
-      let button = document.createElement("button");
-      button.innerText = pokemon.name;
-      button.classList.add("btn", "btn-primary");
-
-      listItem.appendChild(button);
-      pokemonList.appendChild(listItem);
-      button.addEventListener("click", function(event) {
-        pokemonRepository.showDetails(pokemon);
-      });
-    }
-
-
-
-    // add listItem function with button
-    function addListItem(pokemon) {
-        let pokemonList = document.querySelector('.pokemon-list');
-        let listPokemon = document.createElement('li');
-        let button = document.createElement('button');
-
+        let pokemonListElement = document.querySelector(".pokemon-list");
+        let listItem = document.createElement("li");
+        
+        let button = document.createElement("button");
         button.innerText = pokemon.name;
-        button.classList.add("btn");
+        button.classList.add("btn", "btn-primary", "pokemon-button"); // Added pokemon-button class
 
-        listPokemon.appendChild(button);
-        pokemonList.appendChild(listPokemon);
-
-        button.addEventListener('click', function (event) {
+        listItem.append(button);
+        pokemonListElement.append(listItem);
+        button.addEventListener("click", function (event) {
             showDetails(pokemon);
         });
     }
 
+
     function loadList() {
-        return fetch(apiUrl).then(function (response) {
-            return response.json();
-        }).then(function (json) {
-            json.results.forEach(function (item) {
-                let pokemon = {
-                    name: item.name,
-                    detailsUrl: item.url
-                };
-                add(pokemon);
+        return fetch(apiUrl)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (json) {
+                json.results.forEach(function (item) {
+                    let pokemon = {
+                        name: item.name,
+                        detailsUrl: item.url,
+                    };
+                    add(pokemon);
+                });
+            })
+            .catch(function (e) {
+                console.error(e);
             });
-        }).catch(function (e) {
-            console.error(e);
-        })
     }
 
     function loadDetails(item) {
         let url = item.detailsUrl;
 
-        return fetch(url).then(function (response) {
-            return response.json();
-        }).then(function (details) {
-            item.imageUrl = details.sprites.other["official-artwork"].front_default;
-            item.criesUrl = details.cries.latest;
-            item.stage = details.species;
-            item.height = details.height;
-            item.weight = details.weight;
-            item.types = details.types.type;
-            item.id = details.id;
-            item.hp = details.stats.stat;
-            item.abilities = details.abilities.name;
-            item.abilities2 = details.abilities.name;
-        }).catch(function (e) {
-            console.error(e);
-        });
+        return fetch(url)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (details) {
+                item.imageUrl = details.sprites.other["official-artwork"].front_default;
+                item.criesUrl = details.cries.latest;
+                item.stage = details.species.name;
+                item.height = details.height;
+                item.weight = details.weight;
+                item.types = details.types.map((type) => type.type.name);
+                item.id = details.id;
+                item.hp = details.stats.find((stat) => stat.stat.name === 'hp').base_stat;
+                item.abilities = details.abilities.map((ability) => ability.ability.name);
+            })
+            .catch(function (e) {
+                console.error(e);
+            });
     }
 
-    //show modal content
     function showModal(item) {
-        let modalHeader = $(".modal-header");
-        let modalBody = $(".modal-body");
-        let modalFooter = $(".modal-footer");
-        let modalContainer = $("#modal-container-fluid");
+        let modalContent = document.querySelector("#modal-content");
 
-        //clear existing modal content
-        modalHeader.empty();
-        modalBody.empty();
-        modalFooter.empty();
+        let modalHeader = document.querySelector(".modal-header");
+        let modalBody = document.querySelector(".modal-body");
+        let modalFooter = document.querySelector(".modal-footer");
 
-        //creating element for STAGE in model content
-        let stageElement = $("<h5>" + item.stage + "</h5>");
-        //creating element for NAME in model content
-        let nameElement = $("<h2>" + item.name + "</h2>");
-        //creating element for HP in model content
-        let hpElement = $("<h4> <small>HP </small>" + item.hp + "</h4>");
-        //creating element for TYPE IMG in model content
-        let elementElement = $('<img class="">');
-        //creating element for IMAGE in model content
-        let imageElement = $('<img class="modal-img" style="width:50%">');
-        imageElement.attr("src", item.imageUrl)
-        //creating element for BLANK in model content
-        let blankElement = $("<br></br>");
-        //creating element for ID in model content
-        let idElement = $("<h5> No. " + item.id + "</h5>");
-        //creating element for HEIGHT in model content
-        let heightElement = $("<h5>" + item.height + "</h5>");
-        //creating element for WEIGHT in model content
-        let weightElement = $("<h5>" + item.weight + "</h5>");
-        //creating element for ABILITY in model content
-        let abilityElement = $("<h3>" + item.ability + "</h3>");
-        //creating element for ABILITY 2 in model content
-        let ability2Element = $("<h3>" + item.ability2 + "</h3>");
+        modalContent.appendChild(modalHeader);
+        modalContent.appendChild(modalBody);
+        modalContent.appendChild(modalFooter);
+
+        modalHeader.innerHTML = '';
+        modalBody.innerHTML = '';
+        modalFooter.innerHTML = '';
+
+        let stageElement = document.createElement("sup");
+        stageElement.innerHTML = '<h1>' + 'basic' + '</h1>';
+
+        let nameElement = document.createElement("h3");
+        nameElement.innerText = item.name;
+
+        let hpElement = document.createElement("h4");
+        hpElement.innerHTML = "<small>HP </small>" + item.hp;
+
+        let imageElement = document.createElement("img");
+        imageElement.classList.add("modal-img");
+
+        imageElement.src = item.imageUrl;
+
+        let idElement = document.createElement("sub");
+        idElement.innerText = 'NO. ' + item.id + '  ';
+
+        let typeElement = document.createElement("sub");
+        typeElement.innerText = item.types + '';
+
+        let heightElement = document.createElement("sub");
+        heightElement.innerText = ' HT: ' + item.height + '" ' + '  ';
+
+        let weightElement = document.createElement("sub");
+        weightElement.innerText = ' WT: ' + item.weight + 'lbs ';
+
+        let abilitiesElement = document.createElement("div");
+        item.abilities.forEach((ability) => {
+            let abilityItem = document.createElement("h4");
+            abilityItem.innerText = ability;
+            abilitiesElement.appendChild(abilityItem);
+        });
         
-        modalHeader.append(stageElement);
-        modalHeader.append(nameElement);
-        modalHeader.append(hpElement);
-        modalHeader.append(elementElement);
-        modalBody.append(imageElement);
-        modalBody.append(blankElement);
-        modalBody.append(idElement);
-        modalBody.append(heightElement);
-        modalBody.append(weightElement);
-        modalFooter.append(abilityElement);
-        modalFooter.append(ability2Element);
+        modalHeader.appendChild(stageElement);
+        modalHeader.appendChild(nameElement);
+        modalHeader.appendChild(hpElement);
+        modalBody.appendChild(imageElement);
+        modalBody.appendChild(idElement);
+        modalBody.appendChild(typeElement);
+        modalBody.appendChild(heightElement);
+        modalBody.appendChild(weightElement);
+        modalFooter.appendChild(abilitiesElement);
+
+
     }
-    
+
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function () {
             showModal(pokemon);
-            $("#modal-container-fluid").modal('show');
+            $("#modal-container").modal('show');
         });
     }
-    
+
+
     return {
         add: add,
         addListItem: addListItem,
@@ -148,21 +144,13 @@ let pokemonRepository = (function () {
         loadList: loadList,
         loadDetails: loadDetails,
         showDetails: showDetails,
-        showModal: showModal
+        showModal: showModal,
     };
 })();
-//End Repository IIFE
 
-//Using Fetch
 pokemonRepository.loadList().then(function () {
-    // Now the data is loaded!
     pokemonRepository.getEmAll().forEach(function (pokemon) {
         pokemonRepository.addListItem(pokemon);
     });
-});
-
-//print all pokemon info
-pokemonRepository.getEmAll().forEach(function (pokemon) {
-    pokemonRepository.addListItem(pokemon);
 });
 
