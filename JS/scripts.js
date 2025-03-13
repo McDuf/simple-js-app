@@ -25,7 +25,6 @@ let pokemonRepository = (function () {
         });
     }
 
-
     function loadList() {
         return fetch(apiUrl)
             .then(function (response) {
@@ -71,17 +70,25 @@ let pokemonRepository = (function () {
     function showModal(item) {
         let modalContent = document.querySelector("#modal-content");
 
+        let modalTitle = document.querySelector(".modal-title");
         let modalHeader = document.querySelector(".modal-header");
         let modalBody = document.querySelector(".modal-body");
         let modalFooter = document.querySelector(".modal-footer");
 
+        modalContent.appendChild(modalTitle);
         modalContent.appendChild(modalHeader);
         modalContent.appendChild(modalBody);
         modalContent.appendChild(modalFooter);
 
+        modalTitle.innerHTML = '';
         modalHeader.innerHTML = '';
         modalBody.innerHTML = '';
         modalFooter.innerHTML = '';
+
+        let closeButton = document.createElement("button");
+        closeButton.classList.add("close");
+        closeButton.innerHTML = '&times';
+        
 
         let stageElement = document.createElement("sup");
         stageElement.innerHTML = '<h1>' + 'basic' + '</h1>';
@@ -125,8 +132,16 @@ let pokemonRepository = (function () {
         modalBody.appendChild(heightElement);
         modalBody.appendChild(weightElement);
         modalFooter.appendChild(abilitiesElement);
+        modalTitle.appendChild(closeButton); 
 
-
+    window.addEventListener("click", (e) => {
+        if (e.target != modalContent) {
+        hideModal();
+        }
+    })
+}
+    function hideModal(pokemon) {
+        $("#modal-container").modal('hide');
     }
 
     function showDetails(pokemon) {
@@ -135,8 +150,7 @@ let pokemonRepository = (function () {
             $("#modal-container").modal('show');
         });
     }
-
-
+    
     return {
         add: add,
         addListItem: addListItem,
@@ -145,6 +159,7 @@ let pokemonRepository = (function () {
         loadDetails: loadDetails,
         showDetails: showDetails,
         showModal: showModal,
+        hideModal: hideModal
     };
 })();
 
